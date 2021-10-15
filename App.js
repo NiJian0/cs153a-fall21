@@ -4,11 +4,12 @@ import { Text, View, StyleSheet, Button, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Counter from './components/Counter';
+import Check from './components/Check';
 
 
+const Stack = createNativeStackNavigator();
 
-
-function HomeScreen({ navigation }) {
+const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
@@ -88,28 +89,6 @@ function DetailsScreen({ navigation }) {
   );
 }
 
-function CheckScreen({ navigation, route }) {
-    React.useEffect(() => {
-    if (route.params?.count) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.count]);
-
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={styles.paragraph1}>
-          You bought {route.params?.count1} T-shirt(s), {route.params?.count2} Coat(s), {route.params?.count3} Pant(s) and {route.params?.count4} skirt(s)!
-        </Text>
-          <Text style={{fontSize:48, margin: 10 }}>Total: ${route.params?.count1*30+route.params?.count2*100+route.params?.count3*50+route.params?.count4*60}</Text>
-          <Button
-            title="CHECK"
-            color="pink"
-          />
-      <Text>Check out Screen </Text>
-    </View>
-  )
-}
 
 function LogoTitle() {
   return (
@@ -121,9 +100,8 @@ function LogoTitle() {
 }
 
 
-const Stack = createNativeStackNavigator();
 
-function App() {
+const MyStack = () => {
   window.localStorage.setItem("T-shirt",0);
   window.localStorage.setItem("Coat",0);
   window.localStorage.setItem("Pants",0);
@@ -133,11 +111,9 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} options={{ title: 'Add Items' }}
- />
-        <Stack.Screen name="Check" component={CheckScreen} options={{ title: 'Check out' }}          options={({ navigation, route }) => ({
-            headerTitle: (props) => <LogoTitle {...props} />,
-          })}
+        <Stack.Screen name="Details" component={DetailsScreen} options={{ title:'Add Items' }}/>
+        <Stack.Screen name="Check" component={Check} options={{ title: 'Check out' }}          options={({ navigation, route }) => ({
+            headerTitle: (props) => <LogoTitle {...props} />,})}
  />
       </Stack.Navigator>
     </NavigationContainer>
@@ -176,5 +152,4 @@ const styles = StyleSheet.create({
 
 });
 
-
-export default App;
+export default MyStack
